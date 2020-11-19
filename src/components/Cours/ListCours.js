@@ -10,7 +10,7 @@ import ModalConfirm from "./ModalConfirm";
 
 const ListCours = ({ cours, auth, generateFile }) => {
   const [search, setSearch] = useState("");
-  const [details, setDeatils] = useState(false);
+  const [coursDetail, setCoursDetail] = useState(null);
   const [remove, setRemove] = useState(false);
   const [coursDelete, setCoursDelete] = useState(null);
   const coursFilter = cours && cours.filter((cour) => cour.idProf === auth.uid);
@@ -20,16 +20,17 @@ const ListCours = ({ cours, auth, generateFile }) => {
       return cours.nomCours.indexOf(search) !== -1;
     });
   return (
-    <div style={{ padding: "40px" }}>
+    <div className="container" style={{ padding: "40px" }}>
       <div className="card">
         <h5 className="card-header text-center">Liste des cours</h5>
         <div className="card-body">
           <input
             type="text"
             value={search}
-            className="form-control"
+            className="form-control float-right"
             placeholder="search"
             onChange={(e) => setSearch(e.target.value.substr(0, 20))}
+            style={{ width: "32%",marginBottom: "8px" }}
           />
           <div className="table-responsive-sm">
             <table className="table table-hover table-bordered">
@@ -64,7 +65,7 @@ const ListCours = ({ cours, auth, generateFile }) => {
                           <button
                             type="button"
                             className="btn btn-link"
-                            onClick={() => setDeatils(true)}
+                            onClick={() => setCoursDetail(cours)}
                           >
                             Details
                           </button>
@@ -112,8 +113,8 @@ const ListCours = ({ cours, auth, generateFile }) => {
             cours={coursDelete}
           />
         ) : null}
-        {details ? <DetailsCours cours={coursFilter} /> : null}
       </div>
+        {coursDetail ? <DetailsCours coursDetail={coursDetail} /> : null}
     </div>
   );
 };
